@@ -10,6 +10,10 @@
   calculateLight();
   calculateTexture();
   
+  document.querySelector('#render-select').oninput = event => {
+    renderMethod = event.target.value
+  }
+  
   function calculateLight() {
     for (let i=0;i<65536;i++) {
       light[i]=0;
@@ -638,8 +642,14 @@
 
     ctx.putImageData(canvasData, 0, 0);
     
+    const outputPoints = [];
+    
+    for (i=0;i< lathePoints.length; i+=2) {
+      outputPoints.push([lathePoints[i], lathePoints[i+1]-200]);
+    }
+    
     const el = document.querySelector('#output');
-    output.textContent = JSON.stringify(lathePoints);
+    output.textContent = JSON.stringify(outputPoints);
   
   }
   
