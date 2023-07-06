@@ -4,7 +4,7 @@
   let PointCount=0;
   let light = [];
   let texture = [];
-  let renderMethod = "envmap";
+  let renderMethod = "point";
   let lathePoints = [];
   
   calculateLight();
@@ -608,7 +608,7 @@
         let c = j+count+10;
         let d = (j+1)+count+10;
 
-        if (renderMethod === "Point") {
+        if (renderMethod === "point") {
           drawPoly(Points[a],Points[b],Points[c],Points[a].nz,canvasData);
           drawPoly(Points[d],Points[b],Points[c],Points[a].nz,canvasData);
         } else  if (renderMethod === "flat") {
@@ -669,7 +669,7 @@
     
     el = document.getElementById("editorcanvas");
     [x,y] = relativeToElement(event,el);
-    if ((y>0) && (y<400) && (x>0) && (x<400) && (PointBeingMoved>-1)) {
+    if ((y>0) && (y<400) && (x>0) && (x<800) && (PointBeingMoved>-1)) {
       movePoint(PointBeingMoved,x,y);
     }
 
@@ -679,7 +679,7 @@
    document.body.onmousedown = (event) => {
     let el = document.getElementById("editorcanvas");
     let [x,y] = relativeToElement(event,el);
-    if ((y>0) && (y<400) && (x>0) && (x<400)) {
+    if ((y>0) && (y<400) && (x>0) && (x<800)) {
       
       if (PointBeingMoved>-1) {
         movePoint(PointBeingMoved,x,y);
