@@ -150,7 +150,7 @@
 
     let zBuffer= [];
     
-    for (let i =0;i<400*400;i++) {
+    for (let i =0;i<800*800;i++) {
       zBuffer[i] = 100000;
     }
 
@@ -169,7 +169,7 @@
                x=leterp(leterp(a.x,c.x,i),leterp(a.x,b.x,i),j);
                y=leterp(leterp(a.y,c.y,i),leterp(a.y,b.y,i),j);
                
-               index = (Math.floor(x)+Math.floor(y)*400)*4;
+               index = (Math.floor(x)+Math.floor(y)*800)*4;
                canvasData.data[index]=color;
                canvasData.data[index+1]=color;
                canvasData.data[index+2]=color;
@@ -188,7 +188,7 @@
         x2=temp;
       }
       
-      let i = Math.floor(x1)+Math.floor(y)*400;
+      let i = Math.floor(x1)+Math.floor(y)*800;
       let ptr = i*4;
       for (let x = x1;x<x2; x++) {
       
@@ -270,7 +270,7 @@
       let txDelta = (right.tx-left.tx) / (rightX-leftX+1);
       let tyDelta = (right.ty-left.ty) / (rightX-leftX+1);
       
-      let i = Math.floor(leftX)+Math.floor(y)*400;
+      let i = Math.floor(leftX)+Math.floor(y)*800;
       let ptr = i*4;
       for (let x = leftX;x<rightX; x++) {
       
@@ -383,7 +383,7 @@
       let nxDelta = (right.nx-left.nx) / (rightX-leftX+1);
       let nyDelta = (right.ny-left.ny) / (rightX-leftX+1);
       
-      let i = Math.floor(leftX)+Math.floor(y)*400;
+      let i = Math.floor(leftX)+Math.floor(y)*800;
       let ptr = i*4;
       for (let x = leftX;x<rightX; x++) {
       
@@ -509,35 +509,35 @@
       
         normal = new Object();
       
-      let nx = -(lathePoints[(i+1)*2+1]-lathePoints[i*2+1]);
-      let ny = lathePoints[(i+1)*2]-lathePoints[i*2];
-      let length = Math.sqrt(nx*nx+ny*ny);
+        let nx = -(lathePoints[(i+1)*2+1]-lathePoints[i*2+1]);
+        let ny = lathePoints[(i+1)*2]-lathePoints[i*2];
+        let length = Math.sqrt(nx*nx+ny*ny);
       
         normal.x=nx / length;
         normal.y=ny / length;
 
-      lineNorms[i]=normal;
+        lineNorms[i]=normal;
       }
       
       let PointNorms = [];
     
       for (let i=0;i<PointCount; i++) {
 
-      let normal = new Object();
+        let normal = {};
 
-      if (i===0) {
-        normal.x=lineNorms[0].x;
-        normal.y=lineNorms[0].y;
-      } else if (i===PointCount-1) {
-        normal.x=lineNorms[PointCount-2].x;
-        normal.y=lineNorms[PointCount-2].y;
-      } else {
-        normal.x=(lineNorms[i-1].x+lineNorms[i].x)/2;
-        normal.y=(lineNorms[i-1].y+lineNorms[i].y)/2;
+        if (i===0) {
+          normal.x=lineNorms[0].x;
+          normal.y=lineNorms[0].y;
+        } else if (i===PointCount-1) {
+          normal.x=lineNorms[PointCount-2].x;
+          normal.y=lineNorms[PointCount-2].y;
+        } else {
+          normal.x=(lineNorms[i-1].x+lineNorms[i].x)/2;
+          normal.y=(lineNorms[i-1].y+lineNorms[i].y)/2;
+        }
+
+        PointNorms[i]=normal;
       }
-
-      PointNorms[i]=normal;
-    }
     
       let Points = [];
       let count = 0;
@@ -552,7 +552,7 @@
         
 
         let r = lathePoints[PointIndex];
-        let y1 = lathePoints[PointIndex+1]-200;
+        let y1 = lathePoints[PointIndex+1]-400;
         let x1 = r*Math.cos(j*2*pi/9);
         let z1 = r*Math.sin(j*2*pi/9);
 
@@ -580,8 +580,8 @@
         
         Points[count]= new Object();
         
-        Points[count].x=200+(x2*256 / (z3+500));
-        Points[count].y=200+(y2*256 / (z3+500));
+        Points[count].x=400+(x2*256 / (z3+1000));
+        Points[count].y=400+(y2*256 / (z3+1000));
         Points[count].z=128+z3;
 
         Points[count].tx=j*28.45;
@@ -663,13 +663,13 @@
 
     let el = document.getElementById("rendercanvas");
     let [x,y] = relativeToElement(event,el);
-    if ((y>0) && (y<400) && (x>0) && (x<400)) {
+    if ((y>0) && (y<800) && (x>0) && (x<800)) {
       drawObject(y,x);
     }
     
     el = document.getElementById("editorcanvas");
     [x,y] = relativeToElement(event,el);
-    if ((y>0) && (y<400) && (x>0) && (x<800) && (PointBeingMoved>-1)) {
+    if ((y>0) && (y<800) && (x>0) && (x<800) && (PointBeingMoved>-1)) {
       movePoint(PointBeingMoved,x,y);
     }
 
@@ -679,7 +679,7 @@
    document.body.onmousedown = (event) => {
     let el = document.getElementById("editorcanvas");
     let [x,y] = relativeToElement(event,el);
-    if ((y>0) && (y<400) && (x>0) && (x<800)) {
+    if ((y>0) && (y<800) && (x>0) && (x<800)) {
       
       if (PointBeingMoved>-1) {
         movePoint(PointBeingMoved,x,y);
